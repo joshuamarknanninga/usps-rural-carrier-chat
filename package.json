@@ -1,12 +1,33 @@
 {
   "name": "usps-rural-carrier-chat",
   "version": "1.0.0",
-  "description": "These are chatrooms for rural carriers in the united states post office.",
-  "main": "index.js",
+  "description": "A Progressive Web App (PWA) chat application for USPS rural carriers.",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:server": "cd server && npm start",
+    "dev:server": "cd server && npm run dev",
+    "start:client": "cd client && npm run dev",
+    "build:client": "cd client && npm run build",
+    "preview:client": "cd client && npm run preview",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-repo/usps-rural-carrier-chat.git"
+  },
+  "keywords": [
+    "USPS",
+    "Chat",
+    "Rural Carriers",
+    "PWA",
+    "React",
+    "Vite",
+    "Node.js",
+    "WebSocket"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
 }
