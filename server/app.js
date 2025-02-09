@@ -1,5 +1,6 @@
 const express = require('express');
 const http = require('http');
+const mongoose = require('mongoose');
 const WebSocket = require('ws');
 const chatRoutes = require('./routes/chatRoutes');
 
@@ -9,6 +10,13 @@ const wss = new WebSocket.Server({ server });
 
 // Middleware
 app.use(express.json());
+
+// MongoDB Connection
+mongoose.connect('mongodb://localhost:27017/usps-chat', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
 app.use('/api/chat', chatRoutes);
@@ -32,7 +40,7 @@ wss.on('connection', (ws) => {
 });
 
 // Start the server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
