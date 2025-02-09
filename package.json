@@ -1,0 +1,12 @@
+{
+  "name": "usps-rural-carrier-chat",
+  "version": "1.0.0",
+  "description": "These are chatrooms for rural carriers in the united states post office.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
