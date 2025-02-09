@@ -1,23 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import ChatList from './components/ChatList';
+import ChatRoom from './components/ChatRoom';
+import useWebSocket from './hooks/useWebSocket';
 
 function App() {
+  const [selectedRoom, setSelectedRoom] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
+
+  const ws = useWebSocket('ws://localhost:5000');
+
+  useEffect(() => {
+    if (ws) {
+      ws.onmessage = (event) => {
+        const message = JSON.parse(event.data);
+        setMessages((prevMessages) => [...prevMessages, message]);
+      };
+    }
+  }, [ws]);
+
+  const sendMessage = () => {
+    if (newMessage.trim() && ws) {
+      const message = {
+        roomId: selectedRoom,
+        message: newMessage,
+        user: 'User',
+        timestamp: new Date(),
+      };
+      ws.send(JSON.stringify(message));
+      setNewMessage('');
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ChatList onSelectRoom={setSelectedRoom} />
+      {selectedRoom && (
+        <ChatRoom
+          messages={messages}
+          newMessage={newMessage}
+          onMessageChange={(e) => setNewMessage(e.target.value)}
+          onSendMessage={sendMessage}
+        />
+      )}
     </div>
   );
 }
