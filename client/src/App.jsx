@@ -8,7 +8,7 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
 
-  const ws = useWebSocket('ws://localhost:5000');
+  const ws = useWebSocket('ws://localhost:3001');
 
   useEffect(() => {
     if (ws) {

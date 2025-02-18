@@ -1,13 +1,47 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.App {
+  font-family: Arial, sans-serif;
+  display: flex;
+  height: 100vh;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.chat-list {
+  width: 20%;
+  border-right: 1px solid #ccc;
+  padding: 10px;
+}
+
+.chat-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.chat-list li {
+  cursor: pointer;
+  margin: 5px 0;
+}
+
+.chat-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.chat-room {
+  width: 80%;
+  padding: 10px;
+}
+
+.messages {
+  height: 80%;
+  overflow-y: auto;
+  border-bottom: 1px solid #ccc;
+}
+
+input {
+  width: 80%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px;
+  margin-left: 10px;
 }
