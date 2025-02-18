@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const mongoose = require('mongoose');
 const WebSocket = require('ws');
+const cors = require('cors'); // Import CORS
 const chatRoutes = require('./routes/chatRoutes');
 
 const app = express();
@@ -9,6 +10,7 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 // Middleware
+app.use(cors()); // Enable CORS for all routes
 app.use(express.json());
 
 // MongoDB Connection
@@ -26,10 +28,12 @@ wss.on('connection', (ws) => {
   console.log('New client connected');
 
   ws.on('message', (message) => {
+    console.log('Received message:', message);
+
     // Broadcast the message to all clients
     wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
-        client.send(message);
+        client.send(message); // Ensure the message is sent as a string
       }
     });
   });
@@ -40,7 +44,7 @@ wss.on('connection', (ws) => {
 });
 
 // Start the server
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5001;
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

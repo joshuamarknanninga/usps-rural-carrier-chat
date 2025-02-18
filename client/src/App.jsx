@@ -8,13 +8,22 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
 
-  const ws = useWebSocket('ws://localhost:3001');
+  const ws = useWebSocket('ws://localhost:5001');
 
   useEffect(() => {
     if (ws) {
-      ws.onmessage = (event) => {
-        const message = JSON.parse(event.data);
-        setMessages((prevMessages) => [...prevMessages, message]);
+      ws.onmessage = async (event) => {
+        let messageData;
+  
+        // Check if the message is a Blob
+        if (event.data instanceof Blob) {
+          const text = await event.data.text(); // Convert Blob to text
+          messageData = JSON.parse(text); // Parse the text as JSON
+        } else {
+          messageData = JSON.parse(event.data); // Parse the string as JSON
+        }
+  
+        setMessages((prevMessages) => [...prevMessages, messageData]);
       };
     }
   }, [ws]);
